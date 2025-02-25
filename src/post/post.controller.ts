@@ -12,17 +12,6 @@ export class PostController {
     return this.postService.findAll();
   }
 
-  // @Get()
-  // findAll(
-  //   @Query('page', ParseIntPipe) page: number = 1,
-  //   @Query('limit', ParseIntPipe) limit: number = 10,
-  //   @Query('search') search?: string,
-  //   @Query('sortBy') sortBy?: keyof Post,
-  //   @Query('order') order?: 'ASC' | 'DESC',
-  // ) {
-  //   return this.postService.findAll(page, limit, search, sortBy, order);
-  // }
-
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.postService.findOne(id);
@@ -44,3 +33,19 @@ export class PostController {
   }
 }
 
+
+
+
+
+
+
+  // @Get()
+  // findAll(
+  //   @Query('page', ParseIntPipe) page: number = 1,
+  //   @Query('limit', ParseIntPipe) limit: number = 10,
+  //   @Query('search') search?: string,
+  //   @Query('sortBy') sortBy?: keyof Post,
+  //   @Query('order') order?: 'ASC' | 'DESC',
+  // ) {
+  //   return this.postService.findAll(page, limit, search, sortBy, order);
+  // }

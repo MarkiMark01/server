@@ -13,6 +13,33 @@ export class PostService {
     return this.postRepo.find({ relations: ['comments'] });
   }
 
+  async findOne(id: number) {
+    const post = await this.postRepo.findOne({ where: { id }, relations: ['comments'] });
+    if (!post) {
+      throw new NotFoundException('Post not found');
+    }
+    return post;
+  }
+
+  create(createPostDto: CreatePostDto) {
+    return this.postRepo.save(createPostDto);
+  }
+
+  async update(id: number, updatePostDto: UpdatePostDto) {
+    await this.postRepo.update(id, updatePostDto);
+    return this.findOne(id);
+  }
+
+  async remove(id: number) {
+    const post = await this.findOne(id);
+    await this.postRepo.remove(post);
+    return { message: 'Post deleted successfully' };
+  }
+}
+
+
+
+
   // async findAll(page = 1, limit = 10, search?: string, sortBy?: keyof Post, order: 'ASC' | 'DESC' = 'DESC') {
   //   const skip = (page - 1) * limit;
 
@@ -40,27 +67,3 @@ export class PostService {
   //     totalPages: Math.ceil(total / limit),
   //   };
   // }
-
-  async findOne(id: number) {
-    const post = await this.postRepo.findOne({ where: { id }, relations: ['comments'] });
-    if (!post) {
-      throw new NotFoundException('Post not found');
-    }
-    return post;
-  }
-
-  create(createPostDto: CreatePostDto) {
-    return this.postRepo.save(createPostDto);
-  }
-
-  async update(id: number, updatePostDto: UpdatePostDto) {
-    await this.postRepo.update(id, updatePostDto);
-    return this.findOne(id);
-  }
-
-  async remove(id: number) {
-    const post = await this.findOne(id);
-    await this.postRepo.remove(post);
-    return { message: 'Post deleted successfully' };
-  }
-}
